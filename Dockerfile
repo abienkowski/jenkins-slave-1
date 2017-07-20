@@ -1,6 +1,6 @@
 FROM java:openjdk-8-jdk-alpine
 
-MAINTAINER zsx <thinkernel@gmail.com>
+MAINTAINER abienkowski-ethoca <adrian.bienkowski@ethoca.com>
 
 ENV JENKINS_SWARM_VERSION 2.2
 ENV JENKINS_SWARM_DOWNLOAD_SITE https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client
@@ -21,6 +21,7 @@ RUN mkdir /docker-entrypoint-init.d
 ONBUILD ADD ./*.sh /docker-entrypoint-init.d
 
 USER "${JENKINS_USER}"
-VOLUME "${JENKINS_HOME}"
+VOLUME "${JENKINS_HOME}/.m2"
+VOLUME "${JENKINS_HOME}/.ssh"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
