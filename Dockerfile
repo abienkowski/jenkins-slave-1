@@ -1,4 +1,4 @@
-FROM java:openjdk-8-jdk-alpine
+FROM java:8u111-jre
 
 MAINTAINER abienkowski-ethoca <adrian.bienkowski@ethoca.com>
 
@@ -7,10 +7,7 @@ ENV JENKINS_SWARM_DOWNLOAD_SITE https://repo.jenkins-ci.org/releases/org/jenkins
 ENV JENKINS_HOME /home/jenkins
 ENV JENKINS_USER jenkins
 
-RUN set -x &&\
-    apk add --update --no-cache curl bash openssh git
-
-RUN adduser -D -h "${JENKINS_HOME}" -g "Jenkins User" -s /sbin/nologin "${JENKINS_USER}" \
+RUN useradd -m -d "${JENKINS_HOME}" -u 1000 -U -s /sbin/nologin "${JENKINS_USER}" \
   && mkdir -p ${JENKINS_HOME}/.m2 ${JENKINS_HOME}/.ssh \
   && chmod 700 ${JENKINS_HOME}/.ssh \
   && chown ${JENKINS_USER}: ${JENKINS_HOME}/.m2 ${JENKINS_HOME}/.ssh
