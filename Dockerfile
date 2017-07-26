@@ -23,7 +23,12 @@ COPY jenkins-slave.sh /usr/local/bin/jenkins-slave.sh
 RUN mkdir /docker-entrypoint-init.d
 ONBUILD ADD ./*.sh /docker-entrypoint-init.d
 
+# -- root own volumes
+VOLUME "/etc/ssl/certs/java"
+VOLUME "/opt"
+
 USER "${JENKINS_USER}"
+# -- user own volumes
 VOLUME "${JENKINS_HOME}/.m2"
 VOLUME "${JENKINS_HOME}/.ssh"
 
