@@ -7,6 +7,11 @@ ENV JENKINS_SWARM_DOWNLOAD_SITE https://repo.jenkins-ci.org/releases/org/jenkins
 ENV JENKINS_HOME /home/jenkins
 ENV JENKINS_USER jenkins
 
+# -- install git
+RUN apt-get update && apt-get install -y git \
+    && rm -rf /var/lib/apt/lists/*
+
+# -- create jenkins user with home directory
 RUN useradd -m -d "${JENKINS_HOME}" -u 1000 -U -s /sbin/nologin "${JENKINS_USER}" \
   && mkdir -p ${JENKINS_HOME}/.m2 ${JENKINS_HOME}/.ssh \
   && chmod 700 ${JENKINS_HOME}/.ssh \
