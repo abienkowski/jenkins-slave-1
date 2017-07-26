@@ -1,4 +1,4 @@
-FROM java:8u111-jre
+FROM java:8u111-jdk
 
 MAINTAINER abienkowski-ethoca <adrian.bienkowski@ethoca.com>
 
