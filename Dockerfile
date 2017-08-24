@@ -18,6 +18,5 @@ RUN mkdir /docker-entrypoint-init.d
 ONBUILD ADD ./*.sh /docker-entrypoint-init.d/
 
 USER "${JENKINS_USER}"
-VOLUME "${JENKINS_HOME}"
 
 ENTRYPOINT ["/usr/local/bin/jenkins-slave.sh"]
