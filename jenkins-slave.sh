@@ -22,8 +22,10 @@ if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
   fi
   if [ ! -z "$JENKINS_PASSWORD" ]; then
     PARAMS="$PARAMS -passwordEnvVariable JENKINS_PASSWORD"
-  else
-    PARAMS="$PARAMS -password $(cat ${JENKINS_SECRET_FILE})"
+  elif [ ! -z "$JENKINS_SECRET_FILE" ]
+    if [ -f $JENKINS_SECRET_FILE ]
+      PARAMS="$PARAMS -password $(cat ${JENKINS_SECRET_FILE})"
+    fi
   fi
   if [ ! -z "$SLAVE_EXECUTORS" ]; then
     PARAMS="$PARAMS -executors $SLAVE_EXECUTORS"
