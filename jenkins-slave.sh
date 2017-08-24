@@ -22,8 +22,8 @@ if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
   fi
   if [ ! -z "$JENKINS_PASSWORD" ]; then
     PARAMS="$PARAMS -passwordEnvVariable JENKINS_PASSWORD"
-  elif [ ! -z "$JENKINS_SECRET_FILE" ]
-    if [ -f $JENKINS_SECRET_FILE ]
+  elif [ ! -z "$JENKINS_SECRET_FILE" ]; then
+    if [ -f "$JENKINS_SECRET_FILE" ]; then
       PARAMS="$PARAMS -password $(cat ${JENKINS_SECRET_FILE})"
     fi
   fi
@@ -36,6 +36,10 @@ if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
 
   echo Running java $JAVA_OPTS -jar $JAR -fsroot $HOME $PARAMS "$@"
   exec java $JAVA_OPTS -jar $JAR -fsroot $HOME $PARAMS "$@"
+  while [ ! $? ]; do
+    sleep 60
+    exec java $JAVA_OPTS -jar $JAR -fsroot $HOME $PARAMS "$@"
+  done
 fi
 
 # As argument is not jenkins, assume user want to run his own process, for sample a `bash` shell to explore this image
